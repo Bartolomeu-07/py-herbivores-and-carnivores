@@ -13,6 +13,10 @@ class Animal:
         return "{" + (f"Name: {self.name}, "
                       f"Health: {self.health}, Hidden: {self.hidden}") + "}"
 
+    @classmethod
+    def remove_dead(cls) -> None:
+        cls.alive = [animal for animal in cls.alive if animal.health > 0]
+
 
 class Herbivore(Animal):
 
@@ -29,5 +33,6 @@ class Carnivore(Animal):
     def bite(animal: Animal) -> None:
         if isinstance(animal, Herbivore) and not animal.hidden:
             animal.health -= 50
-        if animal.health <= 0:
-            Animal.alive.remove(animal)
+            if animal.health <= 0:
+                Animal.remove_dead()
+
